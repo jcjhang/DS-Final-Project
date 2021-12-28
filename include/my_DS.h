@@ -22,6 +22,13 @@ class my_graph{
         int **graph;  // allocate a 2D array
 };
 
+class my_station{
+    public:
+        int* electric = new int[101];   // will be the pointer point to its min heap, 101th record the heap size
+        int* lady = new int[101];
+        int* road = new int[101];
+};
+
 // A class for Min Heap
 class my_MinHeap
 {
@@ -30,7 +37,10 @@ class my_MinHeap
     int heap_size = 0;  // Current number of elements in min heap
 public:
     // Constructor
-    my_MinHeap(int* bike_type){ harr = bike_type; }
+    my_MinHeap(int* bike_type, int my_heap_size){
+        harr = bike_type;
+        heap_size = my_heap_size;
+    }
 
     int parent(int i) { return (i-1)/2; }
     int left(int i) { return (2*i + 1); }   // to get index of left child of node at index i
@@ -52,11 +62,6 @@ public:
   
     // to extract(remove + return) the root which is the minimum element
     int extractMin();
-};
 
-class my_station{
-    public:
-        int* elec = new int[100];   // will be the pointer point to its min heap
-        int* lady = new int[100];
-        int* road = new int[100];
+    bool isEmpty();
 };

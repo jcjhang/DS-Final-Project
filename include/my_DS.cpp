@@ -101,6 +101,8 @@ void my_MinHeap::insertKey(int k){
        swap(&harr[i], &harr[parent(i)]);
        i = parent(i);
     }
+
+    harr[100] = heap_size; 
 }
 
 void my_MinHeap::MinHeapify(int i)
@@ -117,6 +119,8 @@ void my_MinHeap::MinHeapify(int i)
         swap(&harr[i], &harr[smallest]);
         MinHeapify(smallest);
     }
+
+    harr[100] = heap_size; 
 }
 
 // Method to remove minimum element (or root) from min heap
@@ -135,6 +139,15 @@ int my_MinHeap::extractMin()
     harr[0] = harr[heap_size-1];
     heap_size--;
     MinHeapify(0);
-  
+
+    harr[100] = heap_size; 
     return root;
+}
+
+bool my_MinHeap::isEmpty(){
+    // cout << "heap size: " << heap_size << endl;
+    if(heap_size == 0)
+        return true;
+    else
+        return false;
 }

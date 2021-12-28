@@ -13,9 +13,9 @@ class read_data{
         my_graph* read_map();
         my_station** read_station();
         void read_fee();
-        void read_user();
+        int read_user();
         // for fee
-        int discount[3];    // elec, lady, road
+        int discount[3];    // electric, lady, road
         int regular[3];
         int waiting;
         float switching;    // bug: if switching is "int", eof will always be 0 (false)
@@ -29,12 +29,10 @@ class read_data{
         // for station
         int station_id;
         int station_num = 0;
+        string bike_type;
         int num_elec;
         int num_lady;
         int num_road;
         // for user
-        int user;
-        int rent_time;
-        string bike_type;
-        int bike_id;
+        int user_num = 0;
 };
