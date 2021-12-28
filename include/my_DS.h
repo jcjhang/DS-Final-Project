@@ -1,4 +1,9 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+
+using namespace std;
 
 class my_graph{
     public:
@@ -65,5 +70,5 @@ public:
 
     bool isEmpty();
 
-    void printHeapSort();
+    void printHeapSort(ofstream& ofs);
 };

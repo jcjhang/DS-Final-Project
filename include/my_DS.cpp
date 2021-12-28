@@ -154,10 +154,14 @@ bool my_MinHeap::isEmpty(){
         return false;
 }
 
-void my_MinHeap::printHeapSort(){
+void my_MinHeap::printHeapSort(ofstream& ofs_){  // use reference to write the same output file in main
     // cout << "heap size: " << heap_size << endl;
-    while(heap_size != 0){      
-        cout << extractMin() << " ";
+    int min;
+    while(heap_size != 0){
+        min = extractMin();
+        cout << min << " ";
+        ofs_ << min << " ";
     }
     cout << endl;
+    ofs_ << endl;
 }

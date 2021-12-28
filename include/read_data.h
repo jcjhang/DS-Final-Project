@@ -1,7 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
 #include "my_DS.h"
 
 using namespace std;

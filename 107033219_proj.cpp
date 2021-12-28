@@ -49,12 +49,15 @@ int main()
         int return_time;
         int rent_num = 0;
         int rent_bike_id;
+        ofstream ofs;
+        ofs.open("part1_response.txt", ios::out);
         while(!ifs.eof()){
             ifs >> action;
             if(action == "rent"){
                 ifs >> station_id >> bike_type >> user_id_string >> rent_time;
                 user_id = stoi(user_id_string);
                 cout << action << " " << station_id << " " << bike_type << " " << user_id_string << " " << rent_time << endl;
+                ofs << action << " " << station_id << " " << bike_type << " " << user_id_string << " " << rent_time << endl;
                 rent_list[rent_num][0] = station_id;
                 // rent_list[rent_num][1] = bike_type;
                 rent_list[rent_num][2] = user_id;
@@ -77,11 +80,13 @@ int main()
 
                 if(my_heap->isEmpty()){
                     cout << "-------------------------- reject --------------------------" << endl;
+                    ofs << "reject" << endl;
                     delete my_heap;
                     continue;   // rent_num will not ++, so rent_list will not include this trade
                 }
                 else{
                     cout << "accept" << endl;
+                    ofs << "accept" << endl;
                     rent_bike_id = my_heap->extractMin();   // remove(rent) the bike
                     rent_list[rent_num][4] = rent_bike_id;
                 }
@@ -93,6 +98,7 @@ int main()
                 ifs >> station_id >> user_id_string >> return_time;
                 user_id = stoi(user_id_string);
                 cout << action << " " << station_id << " " << user_id_string << " " << return_time << endl;
+                ofs << action << " " << station_id << " " << user_id_string << " " << return_time << endl;
                 for(int i=0; i<rent_num; i++){  // not i <= rent_num, cuz rent_num will be the actual value +1 (++ at the last time)
                     if(user_id == rent_list[i][2]){ // success to rent before
                         // charge fee
@@ -129,29 +135,43 @@ int main()
         }
     }
     ifs.close();
+
     // print status
-    cout << "-------------- status --------------" << endl;
-    for(int i=0; i<station_num; i++){
-        cout << i+1 << ":" << endl;
-        // electric
-        cout << "electric: ";
-        heap_ptr = my_bike_heap[i]->electric;   // i is station_id-1
-        my_MinHeap* my_heap_elec = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
-        my_heap_elec->printHeapSort();
-        delete my_heap_elec;
-        // lady
-        cout << "lady: ";
-        heap_ptr = my_bike_heap[i]->lady;   // i is station_id-1
-        my_MinHeap* my_heap_lady = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
-        my_heap_lady->printHeapSort();
-        delete my_heap_lady;
-        // road
-        cout << "road: ";
-        heap_ptr = my_bike_heap[i]->road;   // i is station_id-1
-        my_MinHeap* my_heap_road = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
-        my_heap_road->printHeapSort();
-        delete my_heap_road;
+    ofstream ofs;
+    ofs.open("part1_status.txt", ios::out);
+    if (!ofs.is_open()) {
+        cout << "Failed to open file.\n";
     }
-    cout << "revenue: " << revenue << endl;
+    else {
+        cout << "-------------- status --------------" << endl;
+        for(int i=0; i<station_num; i++){
+            cout << i+1 << ":" << endl;
+            ofs << i+1 << ":" << endl;
+            // electric
+            cout << "electric: ";
+            ofs << "electric: ";
+            heap_ptr = my_bike_heap[i]->electric;   // i is station_id-1
+            my_MinHeap* my_heap_elec = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
+            my_heap_elec->printHeapSort(ofs);
+            delete my_heap_elec;
+            // lady
+            cout << "lady: ";
+            ofs << "lady: ";
+            heap_ptr = my_bike_heap[i]->lady;   // i is station_id-1
+            my_MinHeap* my_heap_lady = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
+            my_heap_lady->printHeapSort(ofs);
+            delete my_heap_lady;
+            // road
+            cout << "road: ";
+            ofs << "road: ";
+            heap_ptr = my_bike_heap[i]->road;   // i is station_id-1
+            my_MinHeap* my_heap_road = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
+            my_heap_road->printHeapSort(ofs);
+            delete my_heap_road;
+        }
+        cout << "revenue: " << revenue << endl;
+        ofs << revenue;
+        ofs.close();
+    }
     return 0;
 }
