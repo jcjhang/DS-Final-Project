@@ -22,9 +22,9 @@ int main()
     //     cout << my_bike_heap[i] << endl;
     // }
 
-    // station 1's electric bike's id (100~109)
+    // // station 1's electric bike's id (100~109)
     // for(int i=0; i<6; i++){
-    //     cout << my_bike_heap[0]->electric[i] << endl;
+    //     cout << my_bike_heap[7]->electric[i] << endl;
     // }
 
     int user_num = read_data.read_user();
@@ -32,6 +32,7 @@ int main()
 
     int rent_list[user_num][5]; // station_id, bike_type, user_id, rent_time, rent_bike_id
     int revenue = 0;
+    int* heap_ptr = new int;    // create a pointer to the heap(array) address (later depends on station and bike_tyoe)
 
     ifstream ifs("./test_case/user.txt", ios::in);
     if (!ifs.is_open()) {
@@ -47,7 +48,6 @@ int main()
         int rent_time;
         int return_time;
         int rent_num = 0;
-        int* heap_ptr = new int;    // create a pointer to the heap(array) address (later depends on station and bike_tyoe)
         int rent_bike_id;
         while(!ifs.eof()){
             ifs >> action;
@@ -99,10 +99,10 @@ int main()
                         int shortest_time = my_graph.dijkstra(rent_list[i][0]-1, station_id-1); // rent_list[i][0] is starting station
                         int user_time = return_time - rent_list[i][3];  // rent_list[i][3] is rent time
                         if(user_time == shortest_time){
-                            revenue += read_data.discount[rent_list[i][1]]; // rent_list[i][1] is rental bike type
+                            revenue += (read_data.discount[rent_list[i][1]] * user_time); // rent_list[i][1] is rental bike type
                         }
                         else{
-                            revenue += read_data.regular[rent_list[i][1]];
+                            revenue += (read_data.regular[rent_list[i][1]] * user_time);
                         }
 
                         // return bike
@@ -121,6 +121,7 @@ int main()
                         my_heap->insertKey(rent_list[i][4]);    // rent_list[i][4] is rent_bike_id
 
                         delete my_heap;
+                        rent_list[i][2] = 0;    // i.e. delete the rental record, avoiding the problem that same user rent bike later
                         break;
                     }
                 }
@@ -128,6 +129,29 @@ int main()
         }
     }
     ifs.close();
+    // print status
+    cout << "-------------- status --------------" << endl;
+    for(int i=0; i<station_num; i++){
+        cout << i+1 << ":" << endl;
+        // electric
+        cout << "electric: ";
+        heap_ptr = my_bike_heap[i]->electric;   // i is station_id-1
+        my_MinHeap* my_heap_elec = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
+        my_heap_elec->printHeapSort();
+        delete my_heap_elec;
+        // lady
+        cout << "lady: ";
+        heap_ptr = my_bike_heap[i]->lady;   // i is station_id-1
+        my_MinHeap* my_heap_lady = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
+        my_heap_lady->printHeapSort();
+        delete my_heap_lady;
+        // road
+        cout << "road: ";
+        heap_ptr = my_bike_heap[i]->road;   // i is station_id-1
+        my_MinHeap* my_heap_road = new my_MinHeap(heap_ptr, heap_ptr[100]); // create a pointer of heap object (has the class' attribute & method)
+        my_heap_road->printHeapSort();
+        delete my_heap_road;
+    }
     cout << "revenue: " << revenue << endl;
     return 0;
 }
