@@ -81,6 +81,7 @@ int my_graph::dijkstra(int src, int des)
     return dist[des];
 }
 
+
 // ------------------- Min Heap -------------------
 
 void my_MinHeap::insertKey(int k){
@@ -103,6 +104,7 @@ void my_MinHeap::insertKey(int k){
     }
 
     harr[100] = heap_size;
+
 }
 
 void my_MinHeap::MinHeapify(int i)
@@ -130,7 +132,7 @@ int my_MinHeap::extractMin()
         return 10000;
     if (heap_size == 1)
     {
-        // cout << "about to empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+        // cout << "about to empty !!!!!!" << endl;
         heap_size--;
         harr[100] = heap_size;  // don't forget to update heap size
         return harr[0];

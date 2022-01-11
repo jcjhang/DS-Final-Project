@@ -17,16 +17,6 @@ int my_data::get_station_num(){
 }
 
 my_graph* my_data::read_map(){
-    // // calculate the station number
-    // ifstream ifs_("./test_case/map.txt", ios::in);
-    // int num = 0;
-    // while(ifs_ >> start_station >> end_station >> distance){
-    //     if(end_station > num){
-    //         num = end_station;
-    //     }
-    // }
-    // cout << "station num: " << num << endl;
-
     // read station data
     ifstream ifs("./test_case/map.txt", ios::in);
     if (!ifs.is_open()) {
@@ -96,17 +86,7 @@ void my_data::read_fee(){
                 ifs >> transferring;
             }
             count ++;
-            // cout << "eof: " << ifs.eof() << endl;
         }
-        // cout << "discount electric: " << discount[0] << endl;
-        // cout << "regular electric: " << regular[0] << endl;
-        // cout << "discount lady: " << discount[1] << endl;
-        // cout << "regular lady: " << regular[1] << endl;
-        // cout << "discount road: " << discount[2] << endl;
-        // cout << "regular road: " << regular[2] << endl;
-        // cout << "waiting: " << waiting << endl;
-        // cout << "switching: " << switching << endl;
-        // cout << "transferring: " << transferring << endl;
     }
     ifs.close();
 }

@@ -7,15 +7,6 @@ using namespace std;
 
 class my_graph{
     public:
-        // my_graph(int vertice){
-        //     V = vertice;
-        //     graph = new int*[V];
-        //     for (int i = 0; i < V; i++){
-        //         graph[i] = new int[V];
-        //         for (int j = 0; j < V; j++)
-        //             graph[i][j] = 0;  // initialization, 0 stand for disconnected
-        //     }
-        // }
         void initial_graph(int v);  // vertice
         void add_edge(int s, int e, int w); // start, end, weight(distance)
         void print_graph();
